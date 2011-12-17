@@ -61,7 +61,9 @@ public class FoursquareV2 {
 
     public static final String MALE = "male";
     public static final String FEMALE = "female";
-
+    
+    public static final String VERSION = "20111218";
+    
     private String mPhone;
     private String mPassword;
 

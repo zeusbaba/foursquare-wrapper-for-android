@@ -102,6 +102,7 @@ class FoursquareHttpApiV2 {
     private static final String URL_API_USERS_ASPECTS_SELF = "/users/self";
     private static final String URL_API_USERS_ASPECTS_DETAILS = "/users/%s";
     private static final String URL_API_USERS_ASPECTS_CHECKINS = "/users/%s/checkins";
+    private static final String URL_API_USERS_ASPECTS_MAYORSHIPS = "/users/%s/mayorships";
     private static final String URL_API_USERS_ASPECTS_BADGES = "/users/%s/badges";
     private static final String URL_API_USERS_ASPECTS_FRIENDS = "/users/%s/friends";
     private static final String URL_API_USERS_ASPECTS_TIPS = "/users/%s/tips";
@@ -283,7 +284,9 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geolong", geolong), //
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
-                new BasicNameValuePair("geoalt", geoalt));
+                new BasicNameValuePair("geoalt", geoalt)
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
+        );
         return (Tip) mHttpApi.doHttpRequest(httpPost, new TipParser());
     }
 
@@ -319,6 +322,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (Venue) mHttpApi.doHttpRequest(httpPost, new VenueParser());
     }
@@ -344,7 +348,9 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geolong", geolong), //
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
-                new BasicNameValuePair("geoalt", geoalt));
+                new BasicNameValuePair("geoalt", geoalt)
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
+        );
         return (Group<Checkin>) mHttpApi.doHttpRequest(httpGet,
                 new GroupParser(new CheckinParser()));
     }
@@ -368,7 +374,9 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("followers", (tellFollowers) ? "1" : "0"), //
                 new BasicNameValuePair("twitter", (twitter) ? "1" : "0"), //
                 new BasicNameValuePair("facebook", (facebook) ? "1" : "0"), //
-                new BasicNameValuePair("markup", "android")); // used only by android for checkin result 'extras'.
+                new BasicNameValuePair("markup", "android")
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
+        ); // used only by android for checkin result 'extras'.
         return (CheckinResult) mHttpApi.doHttpRequest(httpPost, new CheckinResultParser());
     }
     /*
@@ -398,6 +406,7 @@ class FoursquareHttpApiV2 {
                 
                 , new BasicNameValuePair("broadcast", broadcast)
         		, new BasicNameValuePair("oauth_token", ((HttpApiWithOAuthV2) mHttpApi).getOAuthToken())
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 /*
                 new BasicNameValuePair("private", (isPrivate) ? "1" : "0"), //
                 new BasicNameValuePair("followers", (tellFollowers) ? "1" : "0"), //
@@ -425,6 +434,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (User) mHttpApi.doHttpRequest(httpGet, new UserParser());
     }
@@ -437,8 +447,9 @@ class FoursquareHttpApiV2 {
         HttpGet httpGet = mHttpApi.createHttpGet(
         		//mApiBaseUrl + URL_API_USERS_ASPECTS_DETAILS,
         		fullUrlV2(URL_API_USERS_ASPECTS_DETAILS, uid)
-                , new BasicNameValuePair("USER_ID", uid)
+                //, new BasicNameValuePair("USER_ID", uid)
         		, new BasicNameValuePair("oauth_token", ((HttpApiWithOAuthV2) mHttpApi).getOAuthToken())
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
         	);
         return (User) mHttpApi.doHttpRequest(httpGet, new UserParserV2());
     }
@@ -458,7 +469,9 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt), //
                 new BasicNameValuePair("q", query), //
-                new BasicNameValuePair("l", String.valueOf(limit)));
+                new BasicNameValuePair("l", String.valueOf(limit))
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
+        );
         return (Group<Group<Venue>>) mHttpApi.doHttpRequest(httpGet, new GroupParser(
                 new GroupParser(new VenueParser())));
     }
@@ -474,6 +487,7 @@ class FoursquareHttpApiV2 {
                 , new BasicNameValuePair("limit", String.valueOf(limit))
         		, new BasicNameValuePair("intent", "checkin")
         		, new BasicNameValuePair("oauth_token", ((HttpApiWithOAuthV2) mHttpApi).getOAuthToken())
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
         	);
         		 
         return (Group<Group<Venue>>) mHttpApi.doHttpRequest(httpGet
@@ -496,6 +510,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (Venue) mHttpApi.doHttpRequest(httpGet, new VenueParser());
     }
@@ -517,6 +532,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("filter", filter), //
                 new BasicNameValuePair("sort", sort), //
                 new BasicNameValuePair("l", String.valueOf(limit)) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (Group<Tip>) mHttpApi.doHttpRequest(httpGet, new GroupParser(
                 new TipParser()));
@@ -544,6 +560,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geoalt", geoalt), //
                 new BasicNameValuePair("sort", sort), //
                 new BasicNameValuePair("l", String.valueOf(limit)) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                );
         return (Group<Todo>) mHttpApi.doHttpRequest(httpGet, new GroupParser(
                 new TodoParser()));
@@ -562,6 +579,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (Group<User>) mHttpApi.doHttpRequest(httpGet, new GroupParser(new UserParser()));
     }
@@ -679,15 +697,33 @@ class FoursquareHttpApiV2 {
     		,String afterTimestamp, String beforeTimestamp) throws FoursquareException,
             FoursquareCredentialsException, FoursquareError, IOException {
         HttpGet httpGet = mHttpApi.createHttpGet(fullUrlV2(URL_API_USERS_ASPECTS_CHECKINS, uid)
-        		, new BasicNameValuePair("USER_ID", uid)
+        		//, new BasicNameValuePair("USER_ID", uid)
         		, new BasicNameValuePair("limit", limit)
         		, new BasicNameValuePair("offset", offset)
         		, new BasicNameValuePair("afterTimestamp", afterTimestamp)
         		, new BasicNameValuePair("beforeTimestamp", beforeTimestamp)
         		, new BasicNameValuePair("oauth_token", ((HttpApiWithOAuthV2) mHttpApi).getOAuthToken())
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
         	);
+        if (LOGGING.DEBUG) Log.d(TAG, "--> httpGet : " + httpGet.getParams());
         return (Group<Checkin>) mHttpApi.doHttpRequest(httpGet, new GroupParserV2(new CheckinParserV2()));
     }
+    
+    /** NEW
+     * /mayorshipsV2
+     */
+    /*//TODO: implement
+    @SuppressWarnings("unchecked")
+    public Group<Checkin> mayorshipsV2(String uid) throws FoursquareException,
+            FoursquareCredentialsException, FoursquareError, IOException {
+        HttpGet httpGet = mHttpApi.createHttpGet(fullUrlV2(URL_API_USERS_ASPECTS_MAYORSHIPS, uid)
+        		, new BasicNameValuePair("oauth_token", ((HttpApiWithOAuthV2) mHttpApi).getOAuthToken())
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
+        	);
+        if (LOGGING.DEBUG) Log.d(TAG, "--> httpGet : " + httpGet.getParams());
+        return (Group<Checkin>) mHttpApi.doHttpRequest(httpGet, new GroupParserV2(new MayorParserV2()));
+    }
+    */
     
     /**
      * /mark/todo
@@ -853,6 +889,7 @@ class FoursquareHttpApiV2 {
                 new BasicNameValuePair("geohacc", geohacc), //
                 new BasicNameValuePair("geovacc", geovacc), //
                 new BasicNameValuePair("geoalt", geoalt) //
+        		,new BasicNameValuePair("v", FoursquareV2.VERSION)
                 );
         return (Response) mHttpApi.doHttpRequest(httpPost, new ResponseParser());
     }

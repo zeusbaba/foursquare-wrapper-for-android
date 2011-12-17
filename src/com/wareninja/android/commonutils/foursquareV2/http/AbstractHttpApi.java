@@ -19,6 +19,7 @@
 
 package com.wareninja.android.commonutils.foursquareV2.http;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.wareninja.android.commonutils.foursquareV2.LOGGING;
@@ -264,7 +265,7 @@ HttpRequest Headers for: https://api.foursquare.com/v1/authexchange.json||User-A
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         for (int i = 0; i < nameValuePairs.length; i++) {
             NameValuePair param = nameValuePairs[i];
-            if (param.getValue() != null) {
+            if (param.getValue() != null && !TextUtils.isEmpty(param.getValue())) {
                 //-if (DEBUG) Log.d(TAG, "Param: " + param);
                 params.add(param);
             }
