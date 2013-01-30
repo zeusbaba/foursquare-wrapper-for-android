@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.wareninja.android.commonutils.foursquareV2.LOGGING;
 import com.wareninja.android.commonutils.foursquareV2.types.Checkin;
+import com.wareninja.android.commonutils.foursquareV2.types.Venue;
 
 public class CheckinParserV2 extends AbstractParser<Checkin> {
 
@@ -109,6 +110,14 @@ obj->Checkin [
             obj.setVenue(new VenueParserV2().parse(json.getJSONObject("venue")));
         }
         obj.setShout(json.has("shout")?json.getString("shout"):"");
+        
+        if (json.has("categories")) {
+        	Venue venue = obj.getVenue();
+        	venue.setCategories(new GroupParser(
+                    new CategoryParserV2()).parse(json.getJSONArray("categories"))
+                    );
+        	obj.setVenue(venue);
+        }
          
         /*
         if (json.has("display")) {

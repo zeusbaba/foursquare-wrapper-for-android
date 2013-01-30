@@ -41,9 +41,31 @@ public class CategoryParserV2 extends AbstractParser<Category> {
         
         obj.setId(json.has("id")?json.getString("id"):"");
         obj.setNodeName(json.has("name")?json.getString("name"):"");
-        obj.setIconUrl(json.has("icon")?json.getString("icon"):"");
         obj.setFullPathName(json.has("parents")?json.getString("parents"):"");
         obj.setPrimary(json.has("primary")?json.getBoolean("primary"):false);
+        
+        //obj.setIconUrl((json.optString("icon")!=null)?json.getString("icon"):"");
+        JSONObject json1 = json.optJSONObject("icon");
+        if (json1!=null) {
+        	
+        	String tempUrl = json1.optString("prefix");
+        	tempUrl += "44";// set default size!!!
+        	tempUrl += json1.optString("name");
+        	obj.setIconUrl(tempUrl);
+        }
+        /*
+"icon": {
+"prefix": "https://foursquare.com/img/categories/parks_outdoors/default_",
+"sizes": [
+	32,
+	44,
+	64,
+	88,
+	256
+	],
+"name": ".png"
+},
+         */
         
         /*
         if (json.has("nodename")) {
